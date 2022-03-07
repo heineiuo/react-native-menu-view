@@ -7,8 +7,8 @@ import {
   useState,
 } from "react";
 import { createPortal, findDOMNode } from "react-dom";
+import { PlatformColor } from "react-native-platform-color";
 import {
-  PlatformColor,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -273,16 +273,20 @@ function MenuView(
                       </View>
                     </View>
                     <View>
-                      {image && (
-                        <Text
-                          style={{
-                            fontFamily: image.split("/")[0],
-                            color: imageColor as any,
-                          }}
-                        >
-                          {image.split("/")[1]}
-                        </Text>
-                      )}
+                      {(() => {
+                        if (!image) return null;
+                        const [fontFamily, char, fontSize] = image.split("/");
+                        return (
+                          <Text
+                            style={{
+                              fontFamily,
+                              color: imageColor as any,
+                            }}
+                          >
+                            {char}
+                          </Text>
+                        );
+                      })()}
                     </View>
                   </TouchableOpacity>
                   {index !== actions.length - 1 && seperator}

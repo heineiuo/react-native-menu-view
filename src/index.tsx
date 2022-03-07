@@ -11,8 +11,10 @@ import type {
 function processAction(action: MenuAction): ProcessedMenuAction {
   return {
     ...action,
-    imageColor: processColor(action.imageColor),
-    titleColor: processColor(action.titleColor),
+    // imageColor: processColor(action.imageColor),
+    // titleColor: processColor(action.titleColor),
+    imageColor: action.imageColor,
+    titleColor: action.titleColor,
     subactions: action.subactions?.map((subAction) => processAction(subAction)),
   };
 }

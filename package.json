@@ -37,6 +37,7 @@
     "typescript": "~4.3.5"
   },
   "dependencies": {
-    "@react-native-menu/menu": "^0.5.1"
+    "@react-native-menu/menu": "^0.5.1",
+    "react-native-platform-color": "^1.0.2"
   }
 }
