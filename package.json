@@ -1,6 +1,6 @@
 {
   "name": "react-native-menu-view",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "node_modules/expo/AppEntry.js",
   "types": "lib/typescript/index.d.ts",
   "module": "lib/module/index.js",

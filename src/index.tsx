@@ -1,8 +1,13 @@
 import { ProcessedMenuAction } from "@react-native-menu/menu/lib/typescript/src/types";
-import { MenuAction, MenuComponentProps } from "@react-native-menu/menu";
-import React from "react";
+import {
+  MenuView as NativeMenuVuew,
+  MenuAction,
+  MenuComponentProps,
+} from "@react-native-menu/menu";
+import React, { createElement } from "react";
 
 import UIMenuView from "./UIMenuView";
+import { Platform } from "react-native";
 
 function processAction(action: MenuAction): ProcessedMenuAction {
   return {
@@ -15,6 +20,9 @@ export const MenuView: React.FC<MenuComponentProps> = ({
   actions,
   ...props
 }) => {
+  if (Platform.OS !== "web") {
+    return createElement(NativeMenuVuew, { actions, ...props });
+  }
   const processedActions = actions.map<ProcessedMenuAction>((action) =>
     processAction(action)
   );
