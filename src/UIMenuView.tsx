@@ -1,4 +1,5 @@
 import {
+  FC,
   Fragment,
   ReactNode,
   useCallback,
@@ -17,15 +18,14 @@ import {
 import getPortalContainer from "./getPortalContainer";
 import type {
   MenuComponentProps,
+  MenuView as NativeMenuView,
   MenuAction,
-  ProcessedMenuAction,
-} from "./types";
+} from "@react-native-menu/menu";
+import { ProcessedMenuAction } from "@react-native-menu/menu/lib/typescript/src/types";
 
-function MenuView(
-  props: MenuComponentProps & {
-    children: ReactNode;
-  }
-): JSX.Element {
+const MenuView: FC<
+  Omit<MenuComponentProps, "actions"> & { actions: ProcessedMenuAction[] }
+> = (props) => {
   const {
     style,
     title,
@@ -275,11 +275,12 @@ function MenuView(
                     <View>
                       {(() => {
                         if (!image) return null;
-                        const [fontFamily, char, fontSize] = image.split("/");
+                        const [fontFamily, char] = image.split("/");
                         return (
                           <Text
                             style={{
                               fontFamily,
+                              fontSize: 18,
                               color: imageColor as any,
                             }}
                           >
@@ -299,6 +300,6 @@ function MenuView(
       )}
     </>
   );
-}
+};
 
 export default MenuView;

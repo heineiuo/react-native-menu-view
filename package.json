@@ -1,6 +1,6 @@
 {
   "name": "react-native-menu-view",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "types": "lib/typescript/index.d.ts",
   "module": "lib/module/index.js",
@@ -37,7 +37,7 @@
     "typescript": "~4.3.5"
   },
   "dependencies": {
-    "@react-native-menu/menu": "^0.5.1",
+    "@react-native-menu/menu": "^0.5.2",
     "react-native-platform-color": "^1.0.2"
   }
 }
