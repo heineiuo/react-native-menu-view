@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "@react-native-menu/menu": "^0.5.2",
-    "react-native-platform-color": "^1.0.2"
+    "react-native-platform-color": "^1.0.3"
   }
 }

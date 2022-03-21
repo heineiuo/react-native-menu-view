@@ -4492,10 +4492,10 @@ react-native-codegen@^0.0.6:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-react-native-platform-color@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/react-native-platform-color/-/react-native-platform-color-1.0.2.tgz#5849ca3eb72b54f06c5cad5e19a1dc7384935ebe"
-  integrity sha512-FA0G2hL37G8AYF49Z0QKu2Q8IJVV592iLaa4t1TS9iF1Q6JB+jDw9EAb/4butbt4ea+t7JCn8DKib/W440VtVQ==
+react-native-platform-color@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/react-native-platform-color/-/react-native-platform-color-1.0.3.tgz#397afc309bb04d7acce5ad80384938dad700216e"
+  integrity sha512-Gc6HzdmaTVZd0buPlSQx0lvxSAYjp45Cr0HLIY6G4QF2uDR66CUX0gRA+vuGRbZlSpiPicG2/LN+vI/IY5jLNg==
 
 react-native-web@0.17.1:
   version "0.17.1"
