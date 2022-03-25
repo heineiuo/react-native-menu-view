@@ -26,7 +26,7 @@ export default function App() {
             image: Platform.select({
               ios: "plus",
               android: "ic_menu_add",
-              web: "Material Icons/face",
+              web: "face",
             }),
             imageColor: "#2367A2",
             subactions: [
@@ -38,7 +38,7 @@ export default function App() {
                 image: Platform.select({
                   ios: "heart.fill",
                   android: "ic_menu_today",
-                  web: "Material Icons/e88e",
+                  web: "e88e",
                 }),
                 imageColor: "rgba(100,200,250,0.3)",
                 state: "mixed",
@@ -52,7 +52,7 @@ export default function App() {
                 image: Platform.select({
                   ios: "trash",
                   android: "ic_menu_delete",
-                  web: "Material Icons/delete",
+                  web: "delete",
                 }),
               },
             ],
@@ -65,7 +65,7 @@ export default function App() {
             image: Platform.select({
               ios: "square.and.arrow.up",
               android: "ic_menu_share",
-              web: "Material Icons/share",
+              web: "share",
             }),
             imageColor: "#46F289",
             state: "on",
@@ -78,7 +78,7 @@ export default function App() {
             image: Platform.select({
               ios: "heart.fill",
               android: "ic_menu_today",
-              web: "Material Icons/calendar_today",
+              web: "calendar_today",
             }),
             imageColor: "rgba(100,200,250,0.3)",
             state: "mixed",
@@ -91,7 +91,7 @@ export default function App() {
                 image: Platform.select({
                   ios: "tray",
                   android: "ic_menu_agenda",
-                  web: "Material Icons/e88e",
+                  web: "e88e",
                 }),
                 imageColor: "rgba(100,200,250,0.3)",
                 state: "mixed",
@@ -116,7 +116,7 @@ export default function App() {
                     image: Platform.select({
                       ios: "tray",
                       android: "ic_menu_agenda",
-                      web: "Material Icons/e88e",
+                      web: "e88e",
                     }),
                   },
                   {
@@ -136,7 +136,7 @@ export default function App() {
                     image: Platform.select({
                       ios: "trash",
                       android: "ic_menu_delete",
-                      web: "Material Icons/face",
+                      web: "face",
                     }),
                   },
                 ],
@@ -153,7 +153,7 @@ export default function App() {
             image: Platform.select({
               ios: "tray",
               android: "ic_menu_agenda",
-              web: "Material Icons/favorite",
+              web: "favorite",
             }),
           },
           {
@@ -173,7 +173,7 @@ export default function App() {
             image: Platform.select({
               ios: "trash",
               android: "ic_menu_delete",
-              web: "Material Icons/delete",
+              web: "delete",
             }),
           },
         ]}

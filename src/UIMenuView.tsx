@@ -273,21 +273,17 @@ const MenuView: FC<
                       </View>
                     </View>
                     <View>
-                      {(() => {
-                        if (!image) return null;
-                        const [fontFamily, char] = image.split("/");
-                        return (
-                          <Text
-                            style={{
-                              fontFamily,
-                              fontSize: 18,
-                              color: imageColor as any,
-                            }}
-                          >
-                            {char}
-                          </Text>
-                        );
-                      })()}
+                      {image && (
+                        <Text
+                          style={{
+                            fontFamily: `"React Native Menu", "Material Icons"`,
+                            fontSize: 18,
+                            color: imageColor as any,
+                          }}
+                        >
+                          {image}
+                        </Text>
+                      )}
                     </View>
                   </TouchableOpacity>
                   {index !== actions.length - 1 && seperator}

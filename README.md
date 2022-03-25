@@ -19,5 +19,22 @@ import { MenuView } from 'react-native-menu-view'
 
 All props are same with `@react-native-menu/menu`. 
 
-`image` prop has format with `${fontFamily}/${ligatures}`. You can use @font-face to 
-load an image font.
+## `image` prop
+
+You can use @font-face to load an image font in css. Then you 
+can use font ligatures as `image` prop's value
+
+```css
+@font-face {
+  /* important, font-family name must be `React Native Menu` */
+  font-family: 'React Native Menu';
+  font-style: normal;
+  font-weight: 400;
+  /* This file can be any font */
+  src: url(/static/fonts/MaterialIcons.woff2) format('woff2');
+}
+```
+
+```tsx
+  <MenuView actions={[{ image: 'plus' }]} />
+```
