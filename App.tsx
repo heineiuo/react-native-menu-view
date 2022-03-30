@@ -1,5 +1,11 @@
 import { useEffect } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { MenuView } from "./src";
 
 export default function App() {
@@ -13,6 +19,8 @@ export default function App() {
   }, []);
   return (
     <View style={styles.container}>
+      <Grid></Grid>
+
       <MenuView
         title="Menu Title"
         onPressAction={({ nativeEvent }) => {
@@ -183,6 +191,51 @@ export default function App() {
           <Text style={styles.buttonText}>Test</Text>
         </View>
       </MenuView>
+    </View>
+  );
+}
+
+function Grid() {
+  const { width, height } = useWindowDimensions();
+  const gap = 100;
+  return (
+    <View
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width,
+        height,
+      }}
+    >
+      {Array.from({ length: Math.ceil(width / gap) }, (v, k) => {
+        return (
+          <View
+            key={k}
+            style={{
+              width: 3,
+              height,
+              backgroundColor: "red",
+              position: "absolute",
+              left: k * gap,
+            }}
+          ></View>
+        );
+      })}
+      {Array.from({ length: Math.ceil(height / gap) }, (v, k) => {
+        return (
+          <View
+            key={k}
+            style={{
+              height: 3,
+              width,
+              backgroundColor: "blue",
+              position: "absolute",
+              top: k * gap,
+            }}
+          ></View>
+        );
+      })}
     </View>
   );
 }

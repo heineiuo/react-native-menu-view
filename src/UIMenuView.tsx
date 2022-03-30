@@ -10,8 +10,10 @@ import {
 import { createPortal, findDOMNode } from "react-dom";
 import { PlatformColor } from "react-native-platform-color";
 import {
+  Pressable,
   Text,
   TouchableOpacity,
+  useColorScheme,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -35,6 +37,7 @@ const MenuView: FC<
   const listRef = useRef(null);
   const buttonRef = useRef(null);
   const { width: ww, height: wh } = useWindowDimensions();
+  const isDark = useColorScheme() === "dark";
 
   const onPressButton = useCallback((e) => {
     setVisible(true);
@@ -172,7 +175,9 @@ const MenuView: FC<
             {
               borderRadius: 12,
               overflow: "hidden",
-              backgroundColor: PlatformColor("systemBackground"),
+              backgroundColor: isDark
+                ? "rgba(0,0,0,0.8)"
+                : "rgba(255,255,255,0.8)",
               shadowOpacity: 10,
               shadowColor: `rgba(0,0,0,0.015)`,
               shadowRadius: 80,
@@ -183,15 +188,13 @@ const MenuView: FC<
               width: 200,
               position: "absolute",
             },
+            {
+              backdropFilter: "blur(10px)",
+            } as unknown as any,
             style,
           ]}
         >
-          <View
-            style={{
-              paddingTop: !!title ? 0 : 2,
-              paddingBottom: 2,
-            }}
-          >
+          <View>
             {title && (
               <>
                 <View
@@ -233,55 +236,68 @@ const MenuView: FC<
 
               return (
                 <Fragment key={action.id}>
-                  <TouchableOpacity
-                    activeOpacity={attributes.disabled ? 1 : undefined}
-                    onPress={onPressActionInner(action)}
-                    style={{
-                      padding: 10,
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <View>
-                      <View key={action.id}>
-                        <Text
-                          style={[
-                            {
-                              fontWeight: "400",
-                              fontSize: 15,
-                              color,
-                            },
-                          ]}
-                        >
-                          {action.title}
-                        </Text>
-                        {subtitle && (
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              color: PlatformColor("systemGray3"),
-                            }}
-                          >
-                            {subtitle}
-                          </Text>
-                        )}
-                      </View>
-                    </View>
-                    <View>
-                      {image && (
-                        <Text
+                  <Pressable onPress={onPressActionInner(action)}>
+                    {(state) => {
+                      const hovered = (state as unknown as any).hovered;
+                      const pressed = (state as unknown as any).pressed;
+                      return (
+                        <View
                           style={{
-                            fontFamily: `"React Native Menu", material, feather, FontAwesome, Fontisto, ionicons, material-community, foundation, FontAwesome5Free-Regular, anticon`,
-                            fontSize: 18,
-                            color: imageColor as any,
+                            paddingHorizontal: 10,
+                            paddingTop: index === 0 ? 12 : 10,
+                            paddingBottom:
+                              index === actions.length - 1 ? 12 : 10,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            backgroundColor: hovered
+                              ? PlatformColor("systemGray6")
+                              : "transparent",
+                            alignItems: "center",
+                            opacity: pressed ? 0.2 : 1,
                           }}
                         >
-                          {image}
-                        </Text>
-                      )}
-                    </View>
-                  </TouchableOpacity>
+                          <View>
+                            <View key={action.id}>
+                              <Text
+                                style={[
+                                  {
+                                    fontWeight: "400",
+                                    fontSize: 15,
+                                    color,
+                                  },
+                                ]}
+                              >
+                                {action.title}
+                              </Text>
+                              {subtitle && (
+                                <Text
+                                  style={{
+                                    fontSize: 13,
+                                    color: PlatformColor("systemGray3"),
+                                  }}
+                                >
+                                  {subtitle}
+                                </Text>
+                              )}
+                            </View>
+                          </View>
+                          <View>
+                            {image && (
+                              <Text
+                                style={{
+                                  fontFamily: `"React Native Menu", "Material Icons", material, feather, FontAwesome, Fontisto, ionicons, material-community, foundation, FontAwesome5Free-Regular, anticon`,
+                                  fontSize: 18,
+                                  color: imageColor as any,
+                                }}
+                              >
+                                {image}
+                              </Text>
+                            )}
+                          </View>
+                        </View>
+                      );
+                    }}
+                  </Pressable>
                   {index !== actions.length - 1 && seperator}
                 </Fragment>
               );
