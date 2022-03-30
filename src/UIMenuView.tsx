@@ -16,11 +16,7 @@ import {
   View,
 } from "react-native";
 import getPortalContainer from "./getPortalContainer";
-import type {
-  MenuComponentProps,
-  MenuView as NativeMenuView,
-  MenuAction,
-} from "@react-native-menu/menu";
+import type { MenuComponentProps, MenuAction } from "@react-native-menu/menu";
 import { ProcessedMenuAction } from "@react-native-menu/menu/lib/typescript/src/types";
 
 const MenuView: FC<
@@ -276,7 +272,7 @@ const MenuView: FC<
                       {image && (
                         <Text
                           style={{
-                            fontFamily: `"React Native Menu", "Material Icons"`,
+                            fontFamily: `"React Native Menu", material, feather, FontAwesome, Fontisto, ionicons, material-community, foundation, FontAwesome5Free-Regular, anticon`,
                             fontSize: 18,
                             color: imageColor as any,
                           }}
