@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import {
   Platform,
+  Pressable,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -187,9 +189,17 @@ export default function App() {
         ]}
         shouldOpenOnLongPress={true}
       >
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Test</Text>
-        </View>
+        <Pressable style={styles.button}>
+          {({ hovered }: any) => {
+            return (
+              <Text
+                style={[styles.buttonText, hovered && styles.buttonTextHovered]}
+              >
+                Test
+              </Text>
+            );
+          }}
+        </Pressable>
       </MenuView>
     </View>
   );
@@ -255,4 +265,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: { color: "white" },
+  buttonTextHovered: { color: "black" },
 });

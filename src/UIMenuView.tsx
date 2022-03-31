@@ -10,6 +10,7 @@ import {
 import { createPortal, findDOMNode } from "react-dom";
 import { PlatformColor } from "react-native-platform-color";
 import {
+  PanResponder,
   Pressable,
   Text,
   TouchableOpacity,
@@ -39,25 +40,38 @@ const MenuView: FC<
   const { width: ww, height: wh } = useWindowDimensions();
   const isDark = useColorScheme() === "dark";
 
-  const onPressButton = useCallback((e) => {
-    setVisible(true);
+  const paning = useRef(false);
+
+  const pan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponderCapture: () => {
+        // console.log("onStartShouldSetPanResponderCapture");
+        paning.current = true;
+        return true;
+      },
+      onPanResponderRelease: () => {
+        // console.log("onPanResponderRelease");
+        setVisible(true);
+      },
+      onPanResponderEnd: () => {
+        // console.log("onPanResponderEnd");
+        paning.current = false;
+      },
+    })
+  ).current;
+
+  const wrapChildren = useCallback((child) => {
+    let inner = child;
+    if (typeof inner === "string") {
+      inner = <Text>{child}</Text>;
+    }
+
+    return (
+      <View {...pan.panHandlers} ref={buttonRef}>
+        {inner}
+      </View>
+    );
   }, []);
-
-  const wrapChildren = useCallback(
-    (child) => {
-      let inner = child;
-      if (typeof inner === "string") {
-        inner = <Text>{child}</Text>;
-      }
-
-      return (
-        <TouchableOpacity ref={buttonRef} onPress={onPressButton}>
-          {inner}
-        </TouchableOpacity>
-      );
-    },
-    [onPressButton]
-  );
 
   useEffect(() => {
     const gap = 10;
@@ -107,9 +121,13 @@ const MenuView: FC<
       if (!visible) {
         return;
       }
+      if (paning.current) {
+        return;
+      }
       if (buttonRef.current) {
         const buttonEl = findDOMNode(buttonRef.current) as Element;
         if (buttonEl.contains(e.target)) {
+          // console.log("click button again so close");
           setVisible(false);
           e.stopPropagation();
           e.preventDefault();
@@ -122,6 +140,7 @@ const MenuView: FC<
           return;
         }
       }
+      // console.log("click outside");
       setVisible(false);
     },
     [visible]
@@ -140,6 +159,7 @@ const MenuView: FC<
         if (onPressAction) {
           e.nativeEvent.id = action.id;
           e.nativeEvent.event = action.id;
+          // console.log("onPressActionInner close");
           setVisible(false);
           onPressAction(e);
         }
