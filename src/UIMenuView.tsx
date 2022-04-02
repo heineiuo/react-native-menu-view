@@ -45,16 +45,13 @@ const MenuView: FC<
   const pan = useRef(
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => {
-        // console.log("onStartShouldSetPanResponderCapture");
         paning.current = true;
         return true;
       },
       onPanResponderRelease: () => {
-        // console.log("onPanResponderRelease");
-        setVisible(true);
+        setVisible((prev) => !prev);
       },
       onPanResponderEnd: () => {
-        // console.log("onPanResponderEnd");
         paning.current = false;
       },
     })
@@ -115,22 +112,14 @@ const MenuView: FC<
    * 2. if menu was clicked, do nothing
    * 3. if neither button nor menu were clicked, close menu
    */
-
   const clickOutsideChecker = useCallback(
     (e) => {
       if (!visible) {
         return;
       }
-      if (paning.current) {
-        return;
-      }
       if (buttonRef.current) {
         const buttonEl = findDOMNode(buttonRef.current) as Element;
         if (buttonEl.contains(e.target)) {
-          // console.log("click button again so close");
-          setVisible(false);
-          e.stopPropagation();
-          e.preventDefault();
           return;
         }
       }
@@ -140,7 +129,6 @@ const MenuView: FC<
           return;
         }
       }
-      // console.log("click outside");
       setVisible(false);
     },
     [visible]
@@ -159,7 +147,6 @@ const MenuView: FC<
         if (onPressAction) {
           e.nativeEvent.id = action.id;
           e.nativeEvent.event = action.id;
-          // console.log("onPressActionInner close");
           setVisible(false);
           onPressAction(e);
         }
