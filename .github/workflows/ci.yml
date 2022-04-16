@@ -3,8 +3,6 @@ name: CI
 on:
   pull_request:
   push:
-    tags:
-      - "v*"
     branches:
       - main
 
@@ -53,22 +51,40 @@ jobs:
         env:
           CI: true
 
+      - name: Get semver
+        id: semver
+        uses: heineiuo/get-commit-semver@v1.6.0
+    
+      - name: Create tag
+        uses: rickstaa/action-create-tag@v1
+        if: |
+          github.event_name == 'push' && steps.semver.outputs.valid == 'true'
+        with:
+          tag: ${{ steps.semver.outputs.raw }}
+
       - name: Create Changelogs
         if: |
-          github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+          github.event_name == 'push' && steps.semver.outputs.valid == 'true'
         id: changelog
         uses: heineiuo/create-changelogs@master
 
-      - name: Publish to NPM
+      - name: Publish to NPM (Pre-release)
         if: |
-          github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+          github.event_name == 'push' && steps.semver.outputs.valid == 'true' && steps.semver.outputs.is_prerelease == 'true'
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}' > ~/.npmrc
+          npm publish --tag=${{ steps.semver.outputs.prerelease_name }}
+
+      - name: Publish to NPM (Release)
+        if: |
+          github.event_name == 'push' && steps.semver.outputs.valid == 'true' && steps.semver.outputs.is_prerelease == 'false'
         run: |
           echo '//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}' > ~/.npmrc
           npm publish
 
       - name: Create Github Release
         if: |
-          github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+          github.event_name == 'push' && steps.semver.outputs.valid == 'true'
         id: create_release
         uses: ncipollo/release-action@v1
         env:
@@ -77,4 +93,4 @@ jobs:
           draft: false
           body: ${{ steps.changelog.outputs.changelogs }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: ${{ steps.changelog.outputs.release_type == 'prerelease' }}
+          prerelease: ${{ steps.semver.outputs.is_prerelease == 'true' }}

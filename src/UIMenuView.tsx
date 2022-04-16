@@ -18,7 +18,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import getPortalContainer from "./getPortalContainer";
+import { getPortalContainer } from "./getPortalContainer";
 import type { MenuComponentProps, MenuAction } from "@react-native-menu/menu";
 import { ProcessedMenuAction } from "@react-native-menu/menu/lib/typescript/src/types";
 
