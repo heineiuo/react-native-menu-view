@@ -55,12 +55,12 @@ jobs:
         id: semver
         uses: heineiuo/get-commit-semver@v1.6.0
     
-      - name: Create tag
-        uses: rickstaa/action-create-tag@v1
-        if: |
-          github.event_name == 'push' && steps.semver.outputs.valid == 'true'
+      - name: Create Tag
+        uses: negz/create-tag@v1
         with:
-          tag: ${{ steps.semver.outputs.raw }}
+          version: ${{ steps.semver.outputs.raw }}
+          message: ${{ steps.semver.outputs.raw }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Changelogs
         if: |
